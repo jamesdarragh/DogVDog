@@ -14,19 +14,19 @@ namespace DogVDog.Web.Controllers.Api
     [RoutePrefix("api/breed")]
     public class BreedApiController : ApiController
     {
-        //private IBreedService _breedService;
+        private IBreedService _breedService;
 
-        //public BreedApiController(IBreedService BreedService)
-        //{
-        //    _breedService = BreedService;
-        //}
+        public BreedApiController(IBreedService BreedService)
+        {
+            _breedService = BreedService;
+        }
 
         [Route(""), HttpPost]
         public HttpResponseMessage InsertBreed(BreedRequestModel model)
         {
             if (ModelState.IsValid)
             {
-                BreedService.InsertBreed(model);
+                _breedService.InsertBreed(model);
 
                 return Request.CreateResponse(HttpStatusCode.OK, model);
             }
@@ -37,7 +37,7 @@ namespace DogVDog.Web.Controllers.Api
         [Route(""), HttpGet]
         public HttpResponseMessage GetAllBreeds()
         {
-            List<Dog> result = BreedService.GetAll();
+            List<Dog> result = _breedService.GetAll();
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

@@ -13,9 +13,9 @@ using DogVDog.Web.Services.Interfaces;
 
 namespace DogVDog.Web.Services
 {
-    public class BreedService //: IBreedService
+    public class BreedService : IBreedService
     {
-        public static void InsertBreed(BreedRequestModel model)
+        public void InsertBreed(BreedRequestModel model)
         {
             Configuration rootConfig = WebConfigurationManager.OpenWebConfiguration("/DogVDog");
             ConnectionStringSettings connString = rootConfig.ConnectionStrings.ConnectionStrings["DefaultConnection"];
@@ -41,7 +41,7 @@ namespace DogVDog.Web.Services
             
         }
 
-        public static List<Dog> GetAll()
+        public List<Dog> GetAll()
         {
             Configuration rootConfig = WebConfigurationManager.OpenWebConfiguration("/DogVDog");
             ConnectionStringSettings connString = rootConfig.ConnectionStrings.ConnectionStrings["DefaultConnection"];

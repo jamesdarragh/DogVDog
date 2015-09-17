@@ -6,12 +6,15 @@ using DogVDog.Web.Services.Interfaces;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Filters;
+using DogVDog.Web.Unity.Injection;
+using System;
+using System.Linq;
 
 namespace DogVDog.Web
 {
     public static class UnityConfig
     {
-        public static void RegisterComponents()
+        public static void RegisterComponents(HttpConfiguration config)
         {
 			var container = new UnityContainer();
             
@@ -19,21 +22,23 @@ namespace DogVDog.Web
             // it is NOT necessary to register your controllers
             
             // e.g. container.RegisterType<ITestService, TestService>();
-            //container.RegisterType<IBreedService, BreedService>();
+            container.RegisterType<IBreedService, BreedService>();
             
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
+
+            
             //code added from sabio.core
-            //config.DependencyResolver = new UnityResolver(container);
+            config.DependencyResolver = new UnityResolver(container);
 
-            //List<System.Web.Http.Filters.IFilterProvider> providers = config.Services.GetFilterProviders().ToList();
+            List<System.Web.Http.Filters.IFilterProvider> providers = config.Services.GetFilterProviders().ToList();
 
-            //config.Services.Add(typeof(System.Web.Http.Filters.IFilterProvider),
-            //                                                new UnityActionFilterProvider(container));
+            config.Services.Add(typeof(System.Web.Http.Filters.IFilterProvider),
+                                                            new UnityActionFilterProvider(container));
 
-            //System.Web.Http.Filters.IFilterProvider defaultprovider = providers.First(p => p is ActionDescriptorFilterProvider);
+            System.Web.Http.Filters.IFilterProvider defaultprovider = providers.First(p => p is ActionDescriptorFilterProvider);
 
-            //config.Services.Remove(typeof(System.Web.Http.Filters.IFilterProvider), defaultprovider);
+            config.Services.Remove(typeof(System.Web.Http.Filters.IFilterProvider), defaultprovider);
         }
     }
 }

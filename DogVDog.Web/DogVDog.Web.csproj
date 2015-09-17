@@ -198,6 +198,8 @@
     <Compile Include="Services\BreedService.cs" />
     <Compile Include="Services\Interfaces\IBreedService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Unity\Injection\UnityActionFilterProvider.cs" />
+    <Compile Include="Unity\Injection\UnityResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
