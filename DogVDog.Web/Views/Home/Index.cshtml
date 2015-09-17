@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="breedForm" class="forms">
+            <div class="row">
+                <label for="breed" class="col-md-4">Breed*</label>
+                <input type="text" class="col-md-8" name="breed" id="breed" />
+            </div>
+            <div class="row">
+                <label for="region" class="col-md-4">Region</label>
+                <input type="text" name="region" id="region" />
+            </div>
+            <div class="row">
+                <label for="isCute" class="col-md-4">Is the Breed Cute?</label>
+                <input type="checkbox" name="isCute" id="isCute" />
+            </div>
+            <div class="row">
+                <label for="medicalIssues" class="col-md-4">Please list all known medical issues the breed is particularly prone to encountering</label>
+                <textarea name="medicalIssues" id="medicalIssues"></textarea>
+            </div>
+            <div class="row">
+                <button type="button" id="breedSubmitButton"class="btn btn-default">Submit</button>
+            </div>            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/darragh.js"></script>
+    <script src="~/Scripts/darragh.services.breed.js"></script>
+
+    <script type="text/javascript">
+        darragh.page.startUp = function () {
+            //darragh.page.initializeValidation();
+            $('#breedSubmitButton').on("click", darragh.page.handlers.onBreedSubmit);
+        };
+
+        //clientside validation rules
+
+        //submit handler
+        darragh.page.handlers.onBreedSubmit = function () {
+            //check validation
+            var breedData = $('#breedForm').serialize();
+            console.log("BreedData", breedData);
+            darragh.services.breed.createBreed(breedData, darragh.page.onBreedSuccess, darragh.page.onBreedError);
+        }
+
+        //ajax handlers
+        darragh.page.onBreedSuccess = function (data, status, xhr) {
+            console.log("Success response: ",data);
+
+            //do other stuff
+        }
+
+        darragh.page.onBreedError = function (jqXHR, textStatus, errrorThrown) {
+            console.log("An Error Occured");
+        }
+
+    </script>
+
+}
